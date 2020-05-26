@@ -6,6 +6,7 @@ import (
 	"github.com/gats/jenga-go/models"
 	"encoding/json"
 	"net/http"
+	"io/ioutil"
 )
 
 const (
@@ -37,25 +38,34 @@ func NewJenga(accessToken, environment string) (*JengaImpl, error) {
 	}, nil
 }
 
-func GetAccessToken(apikey, username, password, environment string) (string, error) {
+func GetAccessToken(apikey, username, password, environment string) (map[string]interface{}, error) {
 	baseUrl, err := getBaseURL(environment)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	resp := utilities.GenerateToken(apikey, username, password, baseUrl, sandboxTokenEndpoint) 
 	defer resp.Body.Close()
-	var ts models.TokenResponse
-	var te models.ErrorResponse
-	if resp.StatusCode == http.StatusOK {
-		if err :=json.NewDecoder(resp.Body).Decode(&ts); err != nil {
-			return "", err
-		}
-		return string(ts.AccessToken), nil
+	resMap := make(map[string]interface{})
+	body, _ := ioutil.ReadAll(resp.Body)
+	err1 := json.Unmarshal([]byte(body), &resMap)
+	if err1 != nil {
+		panic(err1)
 	}
-	if err :=json.NewDecoder(resp.Body).Decode(&te); err != nil {
-		return "", err
-	}
-	return "", errors.New(te.Message)
+	// var ts models.TokenResponse
+	// var te models.ErrorResponse
+	// if resp.StatusCode == http.StatusOK {
+	// 	if err :=json.NewDecoder(resp.Body).Decode(&ts); err != nil {
+	// 		return "", err
+	// 	}
+	// 	return map[string]interface{} {
+	// 		"access_token": ts.AccessToken,
+	// 		"expires_in": 
+	// 	}, nil
+	// }
+	// if err :=json.NewDecoder(resp.Body).Decode(&te); err != nil {
+	// 	return "", err
+	// }
+	// return "", errors.New(te.Message)
 }
 
 func getBaseURL(environment string) (string, error) {
