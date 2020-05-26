@@ -50,7 +50,7 @@ func GetAccessToken(apikey, username, password, environment string) (string, err
 		if err :=json.NewDecoder(resp.Body).Decode(&ts); err != nil {
 			return "", err
 		}
-		return string(mt.AccessToken), nil
+		return string(ts.AccessToken), nil
 	}
 	if err :=json.NewDecoder(resp.Body).Decode(&te); err != nil {
 		return "", err
