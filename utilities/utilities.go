@@ -12,19 +12,21 @@ func MakeRequest() {
 
 }
 
-func GenerateToken(apiKey, username, password, baseUrl string) *http.Response {
+func GenerateToken(apiKey, username, password, baseUrl, path string) *http.Response {
     data := url.Values{}
     data.Set("username", username)
     data.Set("password", password)
     u, _ := url.ParseRequestURI(baseUrl)
-    u.Path = "/identity-test/v2/token"
-    endpoint := u.String()
+    u.Path = path
+    URL := u.String()
+    log.Println(URL)
     client := &http.Client{
 		Timeout: time.Duration(30 * time.Second),
 	}
-    r, _ := http.NewRequest("POST", endpoint, strings.NewReader(data.Encode()))
+    r, _ := http.NewRequest("POST", URL, strings.NewReader(data.Encode()))
     r.Header.Add("Authorization", "Basic "+ apiKey)
+    log.Printf("%v\n", r.Header)
     resp, _ := client.Do(r)
-	log.Printf("%v", resp)
+	log.Printf("%v\n", resp)
 	return resp
 }

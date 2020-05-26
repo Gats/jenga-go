@@ -11,10 +11,10 @@ import (
 const (
 	productionBoxBaseURL = ""
 	sandBoxBaseURL = "https://uat.jengahq.io/"
-	sandBoxAccountsBase = "account-test/v2/"
-	sandBoxTransactionBase = "transaction-test/v2/"
-	sandBoxCustomerBase = "customer-test/v2/"
-	sanboxTokenBase = "identity-test/v2/token"
+	sandBoxAccountsEndpoint = "account-test/v2/"
+	sandBoxTransactionEndpoint = "transaction-test/v2/"
+	sandBoxCustomerEndpoint = "customer-test/v2/"
+	sandboxTokenEndpoint = "identity-test/v2/token"
 )
 
 type Jenga interface {
@@ -42,7 +42,7 @@ func GetAccessToken(apikey, username, password, environment string) (string, err
 	if err != nil {
 		return "", err
 	}
-	resp := utilities.GenerateToken(apikey, username, password, baseUrl) 
+	resp := utilities.GenerateToken(apikey, username, password, baseUrl, sandboxTokenEndpoint) 
 	defer resp.Body.Close()
 	var ts models.TokenResponse
 	var te models.ErrorResponse
