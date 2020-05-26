@@ -13,7 +13,7 @@ func AccountBalance(accessToken, env, countryCode, account, keyPath string) (map
 	}
 	accInfo := map[string]interface{} {
 		"countrycode": countryCode,
-		"account": account
+		"account": account,
 	}
 	jg.GetAccountBalance(accInfo)
 }
