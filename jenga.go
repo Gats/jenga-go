@@ -25,9 +25,10 @@ type Jenga interface {
 type JengaImpl struct {
 	BaseURL string
 	Token	string
+	KeyPath	string
 }
 
-func NewJenga(accessToken, environment string) (*JengaImpl, error) {
+func NewJenga(accessToken, environment, keyPath string) (*JengaImpl, error) {
 	baseUrl, err := getBaseURL(environment)
 	if err != nil {
 		return nil, err
@@ -35,6 +36,7 @@ func NewJenga(accessToken, environment string) (*JengaImpl, error) {
 	return &JengaImpl{
 		BaseURL: baseUrl,
 		Token:  accessToken,
+		KeyPath: keyPath,
 	}, nil
 }
 
@@ -49,23 +51,8 @@ func GetAccessToken(apikey, username, password, environment string) (map[string]
 	body, _ := ioutil.ReadAll(resp.Body)
 	err1 := json.Unmarshal([]byte(body), &resMap)
 	if err1 != nil {
-		panic(err1)
+		return nil, err1
 	}
-	// var ts models.TokenResponse
-	// var te models.ErrorResponse
-	// if resp.StatusCode == http.StatusOK {
-	// 	if err :=json.NewDecoder(resp.Body).Decode(&ts); err != nil {
-	// 		return "", err
-	// 	}
-	// 	return map[string]interface{} {
-	// 		"access_token": ts.AccessToken,
-	// 		"expires_in": 
-	// 	}, nil
-	// }
-	// if err :=json.NewDecoder(resp.Body).Decode(&te); err != nil {
-	// 	return "", err
-	// }
-	// return "", errors.New(te.Message)
 	return resMap, nil
 }
 
