@@ -5,7 +5,7 @@ import (
 	"net/url"
     "time"
     "strings"
-    "log"
+    // "log"
 )
 
 func MakeRequest() {
