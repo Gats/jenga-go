@@ -10,7 +10,7 @@ import (
 
 const (
 	productionBoxBaseURL = ""
-	sandBoxBaseURL = "https://sandbox.jengahq.io/"
+	sandBoxBaseURL = "https://uat.jengahq.io/"
 	sandBoxAccountsBase = "account-test/v2/"
 	sandBoxTransactionBase = "transaction-test/v2/"
 	sandBoxCustomerBase = "customer-test/v2/"
