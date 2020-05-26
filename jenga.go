@@ -3,9 +3,9 @@ package jenga
 import (
 	"errors"
 	"github.com/gats/jenga-go/utilities"
-	"github.com/gats/jenga-go/models"
+	// "github.com/gats/jenga-go/models"
 	"encoding/json"
-	"net/http"
+	// "net/http"
 	"io/ioutil"
 )
 
@@ -66,6 +66,7 @@ func GetAccessToken(apikey, username, password, environment string) (map[string]
 	// 	return "", err
 	// }
 	// return "", errors.New(te.Message)
+	return resMap, nil
 }
 
 func getBaseURL(environment string) (string, error) {
