@@ -14,7 +14,7 @@ const (
 	sandBoxAccountsEndpoint = "account-test/v2/"
 	sandBoxTransactionEndpoint = "transaction-test/v2/"
 	sandBoxCustomerEndpoint = "customer-test/v2/"
-	sandboxTokenEndpoint = "identity-test/v2/token"
+	sandboxTokenEndpoint = "identity/v2/token"
 )
 
 type Jenga interface {
