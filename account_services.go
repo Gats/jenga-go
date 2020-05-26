@@ -6,6 +6,7 @@ import (
 
 
 func (j *JengaImpl) GetAccountBalance(accInfo map[string]interface{}) {
-	log.Println("We have been called")
+	log.Printf("%v\n", j)
+	log.Printf("%v\n", accInfo)
 
 }
