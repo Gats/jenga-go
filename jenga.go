@@ -29,12 +29,12 @@ type JengaImpl struct {
 }
 
 func NewJenga(accessToken, environment, keyPath string) (*JengaImpl, error) {
-	baseUrl, err := getBaseURL(environment)
+	baseRL, err := getBaseURL(environment)
 	if err != nil {
 		return nil, err
 	}
 	return &JengaImpl{
-		BaseURL: baseUrl,
+		BaseURL: baseURL,
 		Token:  accessToken,
 		KeyPath: keyPath,
 	}, nil
