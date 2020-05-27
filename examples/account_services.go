@@ -11,9 +11,7 @@ func AccountBalance(accessToken, env, countryCode, account, keyPath string) (map
 	if err != nil {
 		log.Printf("%v", err)
 	}
-	jg.GetAccountBalance(account, countryCode)
-
-	return nil, nil
+	return jg.GetAccountBalance(account, countryCode)
 }
 
 
