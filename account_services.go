@@ -2,7 +2,7 @@ package jenga
 
 import (
 	"errors"
-	// "log"
+	"log"
 
 	"github.com/gats/jenga-go/utilities"
 )
@@ -14,9 +14,13 @@ func (j *JengaImpl) GetAccountBalance(account, countryCode string) (map[string]i
 		return nil, errors.New("Country code not allowed")
 	}
 	data :=  account + countryCode
-	_, err := utilities.GenerateSignature(data, j.KeyPath)
+	signature, err := utilities.GenerateSignature(data, j.KeyPath)
 	if err != nil {
 		return nil, err
 	}
+	uridata := "/accounts/balances/"+countryCode+"/"+account
+	endpoint := sandBoxAccountsEndpoint+uridata
+	resp := utilities.MakeGetRequest(signature, j.Token, j.BaseURL, endpoint) 
+	log.Printf("%v", resp)
 	return nil,nil
 }
