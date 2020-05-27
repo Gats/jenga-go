@@ -18,7 +18,7 @@ func (j *JengaImpl) GetAccountBalance(account, countryCode string) (map[string]i
 	if err != nil {
 		return nil, err
 	}
-	uridata := "/accounts/balances/"+countryCode+"/"+account
+	uridata := "accounts/balances/"+countryCode+"/"+account
 	endpoint := sandBoxAccountsEndpoint+uridata
 	resp := utilities.MakeGetRequest(signature, j.Token, j.BaseURL, endpoint) 
 	log.Printf("%v", resp)
