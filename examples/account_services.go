@@ -16,6 +16,8 @@ func AccountBalance(accessToken, env, countryCode, account, keyPath string) (map
 		"account": account,
 	}
 	jg.GetAccountBalance(accInfo)
+
+	return nil, nil
 }
 
 
