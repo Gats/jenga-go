@@ -13,7 +13,7 @@ import (
 	"io/ioutil"
 )
 
-func GenerateSignature(data, keypath) (string, error){
+func GenerateSignature(data, keypath string) (string, error){
 	signer, err := loadPrivateKey(keypath)
 	if err != nil {
 		return "", err
