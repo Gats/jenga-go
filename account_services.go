@@ -8,14 +8,16 @@ import (
 )
 
 
-func (j *JengaImpl) GetAccountBalance(accInfo map[string]interface{}) error {
-	ret := utilities.IsAllowedCountryCode(accInfo["countrycode"])
+func (j *JengaImpl) GetAccountBalance(account, countryCode string) error {
+	ret := utilities.IsAllowedCountryCode(countryCode)
 	if !ret {
 		return errors.New("Country code not allowed")
 	}
-	data :=  accInfo["account"].(string) + accInfo["countrycode"].(string)
+	data :=  account + countryCode
 	sig, err := utilities.GenerateSignature(data, j.KeyPath)
 	if err != nil {
 		log.Printf("%v", err)
 	}
+	log.Println(sig)
+	return nil
 }
