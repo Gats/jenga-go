@@ -31,3 +31,13 @@ func GenerateToken(apiKey, username, password, baseUrl, path string) *http.Respo
 	// log.Printf("%v\n", resp)
 	return resp
 }
+
+func IsAllowedCountryCode(code string) bool {
+    allowed := []string{"KE", "UG", "TZ", "RW", "DRC", "SS"}
+    sort.Strings(allowed)
+    i := sort.SearchStrings(allowed, code)
+    if i < len(allowed) && allowed[i] == code {
+        return true
+    }
+    return false
+}
