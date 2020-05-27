@@ -20,6 +20,7 @@ func MakeGetRequest(signature, token, baseUrl, path string) *http.Response {
     r, _ := http.NewRequest("GET", URL, nil)
     r.Header.Add("Authorization", "Bearer "+ token)
     r.Header.Add("signature", signature)
+    log.Printf("%v", r.Header)
     resp, _ := client.Do(r)
 	return resp
 }
