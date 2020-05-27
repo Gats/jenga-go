@@ -2,8 +2,9 @@ package jenga
 
 import (
 	"errors"
-	"log"
-
+	// "log"
+	"io/ioutil"
+	"encoding/json"
 	"github.com/gats/jenga-go/utilities"
 )
 
@@ -21,6 +22,12 @@ func (j *JengaImpl) GetAccountBalance(account, countryCode string) (map[string]i
 	uridata := "accounts/balances/"+countryCode+"/"+account
 	endpoint := sandBoxAccountsEndpoint+uridata
 	resp := utilities.MakeGetRequest(signature, j.Token, j.BaseURL, endpoint) 
-	log.Printf("%v", resp)
-	return nil,nil
+	defer resp.Body.Close()
+	resMap := make(map[string]interface{})
+	body, _ := ioutil.ReadAll(resp.Body)
+	err1 := json.Unmarshal([]byte(body), &resMap)
+	if err1 != nil {
+		return nil, err1
+	}
+	return resMap, nil
 }
