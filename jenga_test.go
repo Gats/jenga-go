@@ -2,6 +2,7 @@ package jenga
 
 import (
 	"testing"
+	"reflect"
 )
 
 const(
@@ -25,8 +26,8 @@ func TestNewJenga(t *testing.T) {
 			t.Errorf("Expected %s but got %s", sandBoxBaseURL, j.BaseURL)
 		}
 	} else if environment == "prod" {
-		if !reflect.DeepEqual(j.BaseURL, productionBoxBaseURL) {
-			t.Errorf("Expected %s but got %s", productionBoxBaseURL, j.BaseURL)
+		if !reflect.DeepEqual(j.BaseURL, productionBaseURL) {
+			t.Errorf("Expected %s but got %s", productionBaseURL, j.BaseURL)
 		}
 	} else {
 		if err == nil {
@@ -35,3 +36,8 @@ func TestNewJenga(t *testing.T) {
 	}
 }
 
+func TestGetAccessToken(t *testing.T) {
+	// Test for invalid parameters
+	resp, err := GetAccessToken("12345678", "12345", "rwttetet", "dev")
+	t.Logf("%v %v", resp, err)
+}

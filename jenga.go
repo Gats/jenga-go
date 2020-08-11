@@ -3,14 +3,12 @@ package jenga
 import (
 	"errors"
 	"github.com/gats/jenga-go/utilities"
-	// "github.com/gats/jenga-go/models"
 	"encoding/json"
-	// "net/http"
 	"io/ioutil"
 )
 
 const (
-	productionBoxBaseURL = ""
+	productionBaseURL = ""
 	sandBoxBaseURL = "https://uat.jengahq.io/"
 	sandBoxAccountsEndpoint = "account-test/v2/"
 	sandBoxTransactionEndpoint = "transaction-test/v2/"
@@ -18,9 +16,9 @@ const (
 	sandboxTokenEndpoint = "identity/v2/token"
 )
 
-type Jenga interface {
-	GetAccountBalance()
-}
+// type Jenga interface {
+// 	GetAccountBalance()
+// }
 
 type JengaImpl struct {
 	BaseURL string
@@ -29,7 +27,7 @@ type JengaImpl struct {
 }
 
 func NewJenga(accessToken, environment, keyPath string) (*JengaImpl, error) {
-	baseRL, err := getBaseURL(environment)
+	baseURL, err := getBaseURL(environment)
 	if err != nil {
 		return nil, err
 	}
@@ -41,11 +39,11 @@ func NewJenga(accessToken, environment, keyPath string) (*JengaImpl, error) {
 }
 
 func GetAccessToken(apikey, username, password, environment string) (map[string]interface{}, error) {
-	baseUrl, err := getBaseURL(environment)
+	baseURL, err := getBaseURL(environment)
 	if err != nil {
 		return nil, err
 	}
-	resp := utilities.GenerateToken(apikey, username, password, baseUrl, sandboxTokenEndpoint) 
+	resp := utilities.GenerateToken(apikey, username, password, baseURL, sandboxTokenEndpoint) 
 	defer resp.Body.Close()
 	resMap := make(map[string]interface{})
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -57,14 +55,14 @@ func GetAccessToken(apikey, username, password, environment string) (map[string]
 }
 
 func getBaseURL(environment string) (string, error) {
-	var baseUrl string
+	var baseURL string
 	if environment == "dev" {
-		baseUrl = sandBoxBaseURL
+		baseURL = sandBoxBaseURL
 	} else if environment == "prod" {
-		baseUrl = productionBoxBaseURL
+		baseURL = productionBaseURL
 	} else {
 		err := errors.New("Environment must either be 'dev' or 'prod'. case sensitive ")
 		return "", err
 	}
-	return baseUrl, nil
+	return baseURL, nil
 }

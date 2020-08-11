@@ -7,10 +7,11 @@ import (
     "strings"
     "sort"
     "log"
+    "bytes"
 )
 
-func MakeGetRequest(signature, token, baseUrl, path string) *http.Response {
-    u, _ := url.ParseRequestURI(baseUrl)
+func MakeGetRequest(signature, token, baseURL, path string) *http.Response {
+    u, _ := url.ParseRequestURI(baseURL)
     u.Path = path
     URL := u.String()
     log.Println(URL)
@@ -25,8 +26,23 @@ func MakeGetRequest(signature, token, baseUrl, path string) *http.Response {
 	return resp
 }
 
-func MakePostRequest() {
-
+func MakePostRequest(signature, token, baseURL, path string, reqBody []byte) *http.Response {
+    u, _ := url.ParseRequestURI(baseURL)
+    u.Path = path
+    URL := u.String()
+    log.Println(URL)
+    client := http.Client{
+		Timeout: time.Second * 30, // Maximum of 30 secs
+	}
+	log.Println(string(reqBody))
+	req, _ := http.NewRequest("POST", URL, bytes.NewBuffer(reqBody))
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+	res, err := client.Do(req)
+	if err != nil {
+		log.Printf("%v", err)
+	}
+	return res
 }
 
 func GenerateToken(apiKey, username, password, baseUrl, path string) *http.Response {
